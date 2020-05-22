@@ -1,31 +1,87 @@
-//------------------------------------------------------------
-//このTodoアプリは以下のページのものを写経しながら自分なりに修正したものです。
-//https://qiita.com/__init__/items/d1c59c87808fc180c871
-//------------------------------------------------------------
+const addTask = document.querySelector('.add');
+const list = document.querySelector('.todos');
+const search = document.querySelector('.search input');
 
-const addPost = document.querySelector('.post');
-const memoList = document.querySelector('.memos');
+// ########## 追加 ###########
+(function(){
+    // 初期化処理
+    // ローカルストレージに格納されている値を取得し、リストを生成する
+    for(var key in localStorage){
+        var html = localStorage.getItem(key);
+        if (html) {
+            list.innerHTML += localStorage.getItem(key);
+        }
+    }
+})();
 
-const createTodoList = (memoTitle) => {
-    //リスト部分のhtml
-    const template = `
-    <li>
-        ${memoTitle}
-        <div class="close">[x]</div>
-    </li>
-    `
-    addPost.innerHTML += template;
+const saveTaskToLocalStorage = (task, html) => {
+    // null は、localStorage に保存しない
+    if(html){
+        // localStorage は、0 から始まる
+        localStorage.setItem(task, html);
+        return;
+    }
+    return;
 }
 
-addPost.addEventListener('submit', e => {
-    //画面の遷移を無効
+const deleteTaskFromLocalStorage = task => {
+    localStorage.removeItem(task);
+    return;
+}
+
+// ###############################
+
+const createTodoList = task => {
+    // HTML テンプレートを生成
+    const html = `
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <span>${task}</span>
+        <i class="far fa-trash-alt delete"></i>
+    </li>
+    `;
+
+    list.innerHTML += html;
+    // ########## 追加 ###########
+    saveTaskToLocalStorage(task, html);
+}
+
+addTask.addEventListener('submit', e => {
+    // デフォルトのイベントを無効
     e.preventDefault();
 
-    //入力した値を空白を除外して格納
-    const memoTitle = addPost.addTitle.value.trim();
-
-    if (memoTitle.length) {
-            createTodoList(memoTitle);
-            addPost.reset();
+    // タスクに入力した値を空白を除外して格納
+    const task = addTask.add.value.trim();
+    if(task.length) {
+        // Todo List の HTML を作成
+        createTodoList(task);
+        // タスクに入力した文字をクリア
+        addTask.reset();
     }
+});
+
+// 削除機能
+list.addEventListener('click', e => {
+    if (e.target.classList.contains('delete')){
+        e.target.parentElement.remove();
+        // ########## 追加 ###########
+        const task = e.target.parentElement.textContent.trim()
+        deleteTaskFromLocalStorage(task);
+    }
+});
+
+const filterTasks = (term) => {
+
+    Array.from(list.children)
+        .filter((todo) => !todo.textContent.toLowerCase().includes(term))
+        .forEach((todo) => todo.classList.add('filtered'));
+
+    Array.from(list.children)
+        .filter((todo) => todo.textContent.toLowerCase().includes(term))
+        .forEach((todo) => todo.classList.remove('filtered'));
+};
+
+search.addEventListener('keyup', () => {
+    // 空白削除かつ、小文字に変換(大文字・小文字の区別をなくす)
+    const term = search.value.trim().toLowerCase();
+    filterTasks(term);
 });
