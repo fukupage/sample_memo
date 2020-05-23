@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ToDo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        let todoList = [];
+        const update = () => {
+            $('#todo').html('');
+            todoList.forEach((d, index) => {
+                if (!d.check) {
+                    $('#todo').append(makeLineHtml(d, index));
+                    //変化があったらアップデートさせる処理を入れる
+                    let dataLine = index;
+                    $('#d' + dataLine).change(() => {
+                        console.log('flag1')
+                        if (dataLine === todoList.length - 1) {
+                            //末尾のデータが入力されたら、さらに１件空データを追加する。
+                            let todoData = { 'check': false, 'title': '', 'comment': '' };
+                            todoList.push(todoData);
+                        }
+                        todoList[dataLine] = {
+                            'check': $("#d" + dataLine).children('.checkbox').prop('checked'),
+                            'title': $("#d" + dataLine).children('.title').val(),
+                            'comment': $("#d" + dataLine).children('.comment').val()
+                        };
+                        update();
+                    });
+                }
+            });
+        }
+
+
+        const makeLineHtml = (data, index) => {
+
+            let checked = '';
+            if (data.check == true) {
+                checked = 'checked'
+            }
+            let str = `
+            <p class="todoData" id="d${index}">
+            <input class="checkbox" type="checkbox" ${checked}>
+            <input class="title" type="text" placeholder="title" value="${data.title}">
+            <input class="comment" type="text" placeholder="comment" value="${data.comment}">
+            </p>
+            `;
+            return str;
+        }
+
+
+
+        $(() => {
+            let todoData = { 'check': false, 'title': '', 'comment': '' };
+            todoList.push(todoData);
+            update();
+        });
+    </script>
+</head>
+
+<body>
+    <div id="todo"></div>
+</body>
+
+</html>
