@@ -26,7 +26,11 @@
                             'title': $("#d" + dataLine).children('.title').val(),
                             'comment': $("#d" + dataLine).children('.comment').val()
                         };
-                        update();
+                        let tdt = todoList[dataLine].title;
+                        let tdc = todoList[dataLine].comment;
+                        if( tdt !== '' && tdc !== ''){
+                            update();
+                        }
                     });
                 }
             });
@@ -46,6 +50,7 @@
             <input class="comment" type="text" placeholder="comment" value="${data.comment}">
             </p>
             `;
+            console.log('flag_3');
             return str;
         }
 
@@ -54,6 +59,7 @@
         $(() => {
             let todoData = { 'check': false, 'title': '', 'comment': '' };
             todoList.push(todoData);
+            console.log('flag_2');
             update();
         });
     </script>
