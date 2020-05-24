@@ -26,12 +26,40 @@ input[type=text]:focus {
 /* 追加 */
 .todos li {
   background: #1a6126;
-}
+  display: block;
+  position: relative;
+  padding: 1.0rem;
+  border-radius: 0.5rem;
+
+  .memoTitle{
+    display:block;
+    width: 90%;
+    border-bottom: 1px dotted #fff;
+    cursor: pointer;
+  }
+
+  .memoComment{
+    display: none;
+    width: 90%;
+    }
+
+
+
+  }
+
+.todos li:hover .memoComment{
+    display: block;
+    transition: .5s;
+    height: 100%;
+  }
 
 /* 追加 */
 .delete {
   cursor: pointer;
   color: fff;
+  position: absolute;
+  top: 1.0rem;
+  right: 1.0rem;
 }
 
 label{

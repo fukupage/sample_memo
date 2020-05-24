@@ -18,13 +18,15 @@
             </form>
         </header>
 
-        <ul class="list-group todos mx-auto text-light">
+        <ul class="list-group todos mx-auto text-light" id="list">
             <!-- ここにタスクが追加されます。 -->
         </ul>
 
-        <form class="add text-center my-4">
+        <form class="add text-center my-4" id="form">
             <label>タスクの追加</label>
-            <input type="text" class="form-control m-auto" name="add" placeholder="追加するタスクを入力してください。">
+            <input type="text" class="form-control m-auto" name="addt" id="addT" placeholder="追加するタイトルを入力してください。">
+            <input type="text" class="form-control m-auto" name="addc" id="addC" placeholder="追加するコメントを入力してください。">
+            <button id="submit">送信</button>
         </form>
     </div>
 
