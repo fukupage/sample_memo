@@ -30,6 +30,9 @@ input[type=text]:focus {
   position: relative;
   padding: 1.0rem;
   border-radius: 0.5rem;
+  -webkit-transition: .5s;
+  transition: .5s;
+  height: 100%;
 }
 
 .todos li .memoTitle {
@@ -46,9 +49,6 @@ input[type=text]:focus {
 
 .todos li:hover .memoComment {
   display: block;
-  -webkit-transition: .5s;
-  transition: .5s;
-  height: 100%;
 }
 
 /* 追加 */

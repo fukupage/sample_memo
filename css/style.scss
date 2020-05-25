@@ -30,6 +30,8 @@ input[type=text]:focus {
   position: relative;
   padding: 1.0rem;
   border-radius: 0.5rem;
+  transition: .5s;
+  height:100%;
 
   .memoTitle{
     display:block;
@@ -43,14 +45,10 @@ input[type=text]:focus {
     width: 90%;
     }
 
-
-
   }
 
 .todos li:hover .memoComment{
     display: block;
-    transition: .5s;
-    height: 100%;
   }
 
 /* 追加 */
