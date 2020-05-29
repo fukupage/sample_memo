@@ -8,39 +8,39 @@ const search = document.querySelector('.search input');
 (function(){
     for(var key in localStorage){
         var html = localStorage.getItem(key);
-        if(html){
-            list.inner += localStorage.getItem(key);
+    if(html){
+            list.innerHTML += localStorage.getItem(key);
+            console.log(html);
         }
     }
 })();
 
-const saveTaskToLocalStorage = (title,comment,html) =>{
+const saveTaskToLocalStorage = (title,html) =>{
     if(html){
-        localStorage.setItem(title,comment,html);
-        console.log(title);
-        console.log(comment);
-        console.log(html);
+        localStorage.setItem(title,html);
     return;
     }
     return;
 }
 
-const deleteTaskFromLocalStorage = (title,comment) =>{
-    localStorage.removeItem(title,comment);
+const deleteTaskFromLocalStorage = (title,comment,html) =>{
+    localStorage.removeItem(title,comment,html);
 return;
 }
 
 const createTodoList = (title, comment) => {
     const html = `
-    <li class="list-grounp-item justify-content-between align-items-center">
+    <li class="list-group-item justify-content-between align-items-center">
     <span class="memoTitle">${title}</span>
     <span class="memoComment">${comment}</span>
     <i class="far fa-trash-alt delete"></i>
     </li>
     `;
     list.innerHTML += html;
-    saveTaskToLocalStorage(title,comment,html);
+    saveTaskToLocalStorage(title,html);
+    console.log(html);
 }
+
 
 submit.addEventListener('click', e => {
     e.preventDefault();
@@ -48,13 +48,16 @@ submit.addEventListener('click', e => {
     const comment = addForm.addc.value.trim();
     if (title !== '' && comment !== '') {
         createTodoList(title, comment);
-        addForm.reset();
     }
 });
 
 list.addEventListener('click', e => {
     if (e.target.classList.contains('delete')) {
         e.target.parentElement.remove();
+        const title = e.target.parentElement.textContent.trim();
+        const comment = e.target.parentElement.textContent.trim();
+        deleteTaskFromLocalStorage(title);
+        deleteTaskFromLocalStorage(comment);
     }
 });
 
